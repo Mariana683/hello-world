@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad Adicional: Condición</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-width: 700px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f0f4f8;
+    }
+   .card {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    h1 { color: #0056b3; text-align: center; }
+    h2 { color: #00a859; font-size: 18px; border-bottom: 2px solid #00a859; padding-bottom: 5px; }
+    label { display: block; margin: 8px 0; font-weight: 500; }
+    input[type="text"], input[type="number"] {
+        padding: 8px;
+        width: 95%;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-top: 4px;
+    }
+    input[type="radio"] { margin-right: 5px; }
+    button {
+        background: #0056b3;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    button:hover { background: #003d82; }
+    button:disabled { background: #aaa; cursor: not-allowed; }
+   .resultado { 
+        font-weight: bold; 
+        color: #d63384; 
+        margin-top: 10px; 
+        padding: 10px;
+        background: #fff0f5;
+        border-radius: 6px;
+    }
+    .info { font-size: 12px; color: #555; background: #e7f3ff; padding: 10px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Actividad Adicional: Condición</h1>
+
+<!-- REGISTRO -->
+<div class="card">
+    <h2>Lista de Alumnos - Registrarse</h2>
+    <form id="formRegistro">
+        <label>Nombre: 
+            <input type="text" id="nombre" value="juan">
+        </label>
+        <label>Apellido: 
+            <input type="text" id="apellido" value="correa">
+        </label>
+        <label>Ciudad: 
+            <input type="text" id="ciudad" value="rosario">
+        </label>
+        <button type="button" onclick="registrarAlumno()">Registrarse</button>
+        <p class="resultado" id="msgRegistro"></p>
+    </form>
+</div>
+
+<div class="info">
+    <b>Información:</b> 
+    getElementByName(): Referencia por el atributo name. 
+    getElementById(): Referencia por el atributo id. 
+    checked: Propiedad que indica si un radio o checkbox está seleccionado.
+</div>
+
+<!-- 1. RADIO BUTTON -->
+<div class="card">
+    <h2>1- Muestra el Radiobutton Seleccionado</h2>
+    <form name="formGenero">
+        <label><input type="radio" name="genero" value="Masculino"> Masculino</label>
+        <label><input type="radio" name="genero" value="Femenino"> Femenino</label>
+        <br>
+        <button type="button" onclick="mostrarGenero()">Mostrar Opción Seleccionada</button>
+        <p class="resultado" id="resultadoGenero"></p>
+    </form>
+</div>
+
+<!-- 2. NUMERO MAYOR -->
+<div class="card">
+    <h2>2- Determinar el Número Mayor</h2>
+    <label>Primer operando: 
+        <input type="number" id="num1">
+    </label>
+    <label>Segundo operando: 
+        <input type="number" id="num2">
+    </label>
+    <button onclick="compararNumeros()">Comparar</button>
+    <p class="resultado" id="resultadoMayor"></p>
+</div>
+
+<!-- 3. SUMAR -->
+<div class="card">
+    <h2>3- Sumar Dos Valores</h2>
+    <label>Primer numero: 
+        <input type="number" id="suma1">
+    </label>
+    <label>Segundo numero: 
+        <input type="number" id="suma2">
+    </label>
+    <button onclick="sumarNumeros()">Suma y muestra</button>
+    <p class="resultado" id="resultadoSuma"></p>
+</div>
+
+<!-- TERMINOS -->
+<div class="card">
+    <label>
+        <input type="checkbox" id="terminos"> Acepto los términos y condiciones.
+    </label>
+    <br>
+    <button id="btnSubmit" onclick="enviarFormulario()">SUBMIT</button>
+    <p class="resultado" id="msgSubmit"></p>
+</div>
+
+<script>
+// 1. REGISTRO CON getElementById
+function registrarAlumno() {
+    let nombre = document.getElementById("nombre").value.trim();
+    let apellido = document.getElementById("apellido").value.trim();
+    let ciudad = document.getElementById("ciudad").value.trim();
+
+    if(nombre === "" || apellido === "" || ciudad === "") {
+        document.getElementById("msgRegistro").innerText = "Por favor completa todos los campos";
+        document.getElementById("msgRegistro").style.color = "red";
+    } else {
+        document.getElementById("msgRegistro").innerText = 
+            `Alumno registrado: ${nombre} ${apellido} de ${ciudad}`;
+        document.getElementById("msgRegistro").style.color = "#00a859";
+    }
+}
+
+// 2. RADIO CON getElementByName y checked
+function mostrarGenero() {
+    let radios = document.getElementsByName("genero"); // getElementByName
+    let seleccionado = "";
+    for(let i = 0; i < radios.length; i++) {
+        if(radios[i].checked) { // propiedad checked
+            seleccionado = radios[i].value;
+        }
+    }
+    document.getElementById("resultadoGenero").innerText =
+        seleccionado ? "Opción seleccionada: " + seleccionado : "Selecciona una opción";
+}
+
+// 3. COMPARAR CON getElementById
+function compararNumeros() {
+    let n1 = parseFloat(document.getElementById("num1").value);
+    let n2 = parseFloat(document.getElementById("num2").value);
+    let res = document.getElementById("resultadoMayor");
+
+    if(isNaN(n1) || isNaN(n2)) {
+        res.innerText = "Ingresa ambos números";
+    } else if(n1 > n2) {
+        res.innerText = `Resultado: El mayor es ${n1}`;
+    } else if(n2 > n1) {
+        res.innerText = `Resultado: El mayor es ${n2}`;
+    } else {
+        res.innerText = "Resultado: Ambos números son iguales";
+    }
+}
+
+// 4. SUMAR CON getElementById
+function sumarNumeros() {
+    let n1 = parseFloat(document.getElementById("suma1").value) || 0;
+    let n2 = parseFloat(document.getElementById("suma2").value) || 0;
+    document.getElementById("resultadoSuma").innerText = "Resultado: " + (n1 + n2);
+}
+
+// 5. VALIDAR TERMINOS CON checked
+function enviarFormulario() {
+    let acepta = document.getElementById("terminos").checked; // checked
+    let msg = document.getElementById("msgSubmit");
+    if(acepta) {
+        msg.innerText = "Formulario enviado correctamente ✅";
+        msg.style.color = "#00a859";
+    } else {
+        msg.innerText = "Debes aceptar los términos y condiciones ❌";
+        msg.style.color = "red";
+    }
+}
+</script>
+
+</body>
+</html>
